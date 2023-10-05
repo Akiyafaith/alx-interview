@@ -8,12 +8,12 @@ def canUnlockAll(boxes):
 
 
     visited = [False] * len(boxes)
-    visited = True
+    visited[0] = True
 
     # a list for the keys you have
     keys = [0]
 
-    while not all (visited) and (keys):
+    while not all (visited) and keys:
         # Now get a key from the list
         key = keys.pop()
         box = boxes[key]
