@@ -13,14 +13,14 @@ def canUnlockAll(boxes):
     # a list for the keys you have
     keys = [0]
 
-    while False in visited and len(keys) > 0:
+    while not all (visited) and (keys):
         # Now get a key from the list
         key = keys.pop()
         box = boxes[key]
 
         for new_key in box:
-            if new_key >= 0 and new_key < len(boxes) and not visited[new_key]:
+            if 0 <= new_key < len(boxes) and not visited[new_key]:
                 visited[new_key] = True
                 keys.append(new_key)
 
-    return False not in visited
+    return all (visited)
