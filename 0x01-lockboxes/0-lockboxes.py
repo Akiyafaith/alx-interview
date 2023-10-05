@@ -6,14 +6,13 @@ def canUnlockAll(boxes):
     """returns True if all boxes can be opened, else False"""
     # create a list to track of boxes that can be visited
 
-
     visited = [False] * len(boxes)
     visited[0] = True
 
     # a list for the keys you have
     keys = [0]
 
-    while not all (visited) and keys:
+    while not all(visited) and keys:
         # Now get a key from the list
         key = keys.pop()
         box = boxes[key]
@@ -23,4 +22,4 @@ def canUnlockAll(boxes):
                 visited[new_key] = True
                 keys.append(new_key)
 
-    return all (visited)
+    return all(visited)
