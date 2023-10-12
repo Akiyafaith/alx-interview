@@ -2,7 +2,7 @@
 """Minimum Operations"""
 
 
-def minOperations(m):
+def minOperations(n):
     """
     In a text file, there is a single character H.
     Your text editor can execute only two operations in this file:
@@ -10,10 +10,10 @@ def minOperations(m):
     Given a number n, write a method that calculates the fewest number of
     operations needed to result in exactly n H characters in the file.
     """
-    if m <= 1:
+    if n <= 1:
         return 0
 
-    for i in range(2, m + 1):
-        if m % x == 0:
-            return minOperations(int(m / x)) + x
-    return m
+    for i in range(2, n + 1):
+        if n % x == 0:
+            return minOperations(int(n / x)) + x
+    return n
