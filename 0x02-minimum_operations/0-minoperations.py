@@ -13,7 +13,7 @@ def minOperations(n):
     if m <= 1:
         return 0
 
-    for i in range(2, n + 1):
+    for i in range(2, m + 1):
         if m % x == 0:
             return minOperations(int(m / x)) + x
     return m
