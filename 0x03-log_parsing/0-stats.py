@@ -9,7 +9,7 @@ status_codes = {}
 
 # define the function to print the stats
 def print_statistics():
-    print(f"File size: {total_size}")
+    print("File size: {}".format(total_size))
     for status_code in sorted(status_codes):
         print(f"{status_code}: {status_codes[status_code]}")
 
