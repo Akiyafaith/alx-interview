@@ -14,7 +14,6 @@ def print_statistics():
         print("{}: {}".format(status_code, status_codes[status_code]))
 
 
-
 # Handle the CRTL+C to print and exit
 def signal_handler(signal, frame):
     print_statistics()
