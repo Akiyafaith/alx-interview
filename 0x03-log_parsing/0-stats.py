@@ -1,47 +1,40 @@
 #!/usr/bin/python3
+"""A script to pass Logs"""
 import sys
-import signal
 
 
-total_size = 0
-status_codes = {}
+if __name__ == '__main__':
+    file_size = [0]
+    status_codes = {200: 0, 301: 0, 400: 0, 401: 0,
+                    403: 0, 404: 0, 405: 0, 500: 0}
 
+    def print_stats():
+        """ Print statistics """
+        print('File size: {}'.format(file_size[0]))
+        for key in sorted(status_codes.keys()):
+            if status_codes[key]:
+                print('{}: {}'.format(key, status_codes[key]))
 
-# define the function to print the stats
-def print_statistics():
-    print("File size: {}".format(total_size))
-    for status_code in sorted(status_codes):
-        print("{}: {}".format(status_code, status_codes[status_code]))
-
-
-
-# Handle the CRTL+C to print and exit
-def signal_handler(signal, frame):
-    print_statistics()
-    sys.exit(0)
-
-
-# set up a signal handler
-signal.signal(signal.SIGINT, signal_handler)
-
-
-for line in sys.stdin:
-    parts = line.strip().split()
-    if len(parts) == 7:
-        ip, _, _, status_code, file_size = parts[0], parts[5], int(parts[6])
-
-        total_size += file_size
-
-        if status_code in ['200', '301', '400',
-                           '401', '403', '404', '405', '500']:
+    def parse_line(line):
+        """ Checks if the line matches """
+        try:
+            line = line[:-1]
+            word = line.split(' ')
+            file_size[0] += int(word[-1])
+            status_code = int(word[-2])
             if status_code in status_codes:
                 status_codes[status_code] += 1
-            else:
-                status_codes[status_code] = 1
+        except BaseException:
+            pass
 
-        if len(status_codes) == 8 or total_size >= 10:
-            print_statistics()
-            total_size = 0
-            status_codes.clear()
-
-print_statistics()
+    linenum = 1
+    try:
+        for line in sys.stdin:
+            parse_line(line)
+            if linenum % 10 == 0:
+                print_stats()
+            linenum += 1
+    except KeyboardInterrupt:
+        print_stats()
+        raise
+    print_stats()
