@@ -42,6 +42,6 @@ for line in sys.stdin:
         if len(status_codes) == 8 or total_size >= 10:
             print_statistics()
             total_size = 0
-            status_codes = {}
+            status_codes.clear()
 
 print_statistics()
