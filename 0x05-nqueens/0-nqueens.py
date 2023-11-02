@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""N queens puzzle"""
 import sys
 
 
@@ -9,6 +10,7 @@ def print_solutions(solutions):
 
 
 def is_safe(board, row, col):
+    """Checks if a queen can be placed on board at the given position"""
     n = len(board)
 
     for i in range(row):
