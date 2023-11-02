@@ -2,52 +2,46 @@
 import sys
 
 
-def is_safe(board, row, col, N):
-    # Check if there is a queen in the same column
+def print_solutions(solutions):
+    """Prints the coordinates of the queens"""
+    for solution in solutions:
+        print(solution)
+
+
+def is_safe(board, row, col):
+    n = len(board)
+
     for i in range(row):
-        if board[i][col] == 1:
-            return False
-
-    # Check upper left diagonal
-    for i, j in zip(range(row, -1, -1), range(col, -1, -1)):
-        if board[i][j] == 1:
-            return False
-
-    # Check upper right diagonal
-    for i, j in zip(range(row, -1, -1), range(col, N)):
-        if board[i][j] == 1:
+        if board[i][col] == 1 or \
+           (0 <= col - row + i < n and board[i][col - row + i] == 1) or \
+           (0 <= col + row - i < n and board[i][col + row - i] == 1):
             return False
 
     return True
 
 
-def solve_nqueens(N):
-    if N < 4:
-        print("N must be at least 4")
-        sys.exit(1)
+def backtrack(board, row, solutions):
+    n = len(board)
 
-    board = [[0 for _ in range(N)] for _ in range(N)]
+    if row == n:
+        queens = [[i, j] for i in range(n)
+                  for j in range(n) if board[i][j] == 1]
+        solutions.append(queens)
+        return
 
-    def solve(row):
-        if row == N:
-            print_board(board)
-            return
-
-        for col in range(N):
-            if is_safe(board, row, col, N):
-                board[row][col] = 1
-                solve(row + 1)
-                board[row][col] = 0
-
-    solve(0)
+    for col in range(n):
+        if is_safe(board, row, col):
+            board[row][col] = 1
+            backtrack(board, row + 1, solutions)
+            board[row][col] = 0
 
 
-def print_board(board):
-    solution = []
-    for row in board:
-        queen_pos = [i for i, cell in enumerate(row) if cell == 1]
-        solution.append(queen_pos)
-    print(solution)
+def solve_nqueens(n):
+    """Solves the problem"""
+    solutions = []
+    board = [[0 for _ in range(n)] for _ in range(n)]
+    backtrack(board, 0, solutions)
+    return solutions
 
 
 if __name__ == "__main__":
@@ -61,4 +55,9 @@ if __name__ == "__main__":
         print("N must be a number")
         sys.exit(1)
 
-    solve_nqueens(N)
+    if N < 4:
+        print("N must be at least 4")
+        sys.exit(1)
+
+    solutions = solve_nqueens(N)
+    print_solutions(solutions)
