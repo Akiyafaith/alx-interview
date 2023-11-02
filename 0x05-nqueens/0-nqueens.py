@@ -23,6 +23,7 @@ def is_safe(board, row, col):
 
 
 def backtrack(board, row, solutions):
+    """Backtrack"""
     n = len(board)
 
     if row == n:
