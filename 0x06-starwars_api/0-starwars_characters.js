@@ -17,7 +17,7 @@ request(apiUrl, (error, response, body) => {
   }
 
   const movieData = JSON.parse(body);
-  const characters = movieData.characters;
+  const { characters } = movieData;
 
   if (characters.length === 0) {
     console.log('No characters found for this movie.');
