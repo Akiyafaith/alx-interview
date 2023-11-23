@@ -6,14 +6,14 @@ def makeChange(coins, total):
     if total <= 0:
         return 0
 
-    # Create a table, store the minimum number of coins needed for each amount
-    dp = [float('inf')] * (total + 1)
-    dp[0] = 0
-
-    # Fill the table using dynamic programming
+    coins.sort(reverse=True)
+    num_coins = 0
     for coin in coins:
-        for amount in range(coin, total + 1):
-            dp[amount] = min(dp[amount], dp[amount - coin] + 1)
+        if total <= 0:
+            break
+        num_coins += total // coin
+        total = total % coin
 
-    # If dp[total] is still infinite, it means the total cannot be achieved
-    return dp[total] if dp[total] != float('inf') else -1
+    if total > 0:
+        return -1
+    return num_coins
