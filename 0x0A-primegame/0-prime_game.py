@@ -31,4 +31,4 @@ def isWinner(x, nums):
         return None
 
 # Example usage
-#print("Winner:", isWinner(3, [4, 5, 1]))
+# print("Winner:", isWinner(3, [4, 5, 1]))
