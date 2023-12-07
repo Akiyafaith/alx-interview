@@ -11,13 +11,13 @@ def is_prime(num):
             return False
     return True
 
+
 def isWinner(x, nums):
     maria_wins = 0
     ben_wins = 0
 
     for n in nums:
         prime_count = sum(is_prime(i) for i in range(1, n + 1))
-        # If the count is even, Maria cannot make a move in the last round, so Ben wins.
         if prime_count % 2 == 0:
             ben_wins += 1
         else:
@@ -29,6 +29,7 @@ def isWinner(x, nums):
         return "Ben"
     else:
         return None
+
 
 # Example usage
 print("Winner:", isWinner(3, [4, 5, 1]))
