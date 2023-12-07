@@ -30,5 +30,6 @@ def isWinner(x, nums):
     else:
         return None
 
+
 if __name__ == "__main__":
     print("Winner:", isWinner(3, [4, 5, 1]))
