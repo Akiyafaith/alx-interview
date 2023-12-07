@@ -29,6 +29,3 @@ def isWinner(x, nums):
         return "Ben"
     else:
         return None
-
-# Example usage
-# print("Winner:", isWinner(3, [4, 5, 1]))
