@@ -30,6 +30,5 @@ def isWinner(x, nums):
     else:
         return None
 
-
 # Example usage
-print("Winner:", isWinner(3, [4, 5, 1]))
+#print("Winner:", isWinner(3, [4, 5, 1]))
