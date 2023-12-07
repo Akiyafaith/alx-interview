@@ -2,42 +2,28 @@
 """ Prime Game """
 
 
-def is_prime(num, primes):
-    """Check if a given number is prime."""
-    for prime in primes:
-        if prime * prime > num:
-            return True
-        if num % prime == 0:
-            return False
-    return True
-
-
-def isWinner(x, nums):
-    most_wins = 0
-    winner = None
-
+def isWinner(m, nums):
+    """ Check if a given number is prime """
+    if not nums or m < 1:
+        return None
+    n = max(nums)
+    nums.sort()
+    m = [False for i in range(n + 1)]
+    for i in range(2, int(n ** 0.5) + 1):
+        if not m[i]:
+            for j in range(i*i, n + 1, i):
+                m[j] = True
+    m[0] = m[1] = True
+    c = 0
+    for i in range(len(m)):
+        if not m[i]:
+            c += 1
+        m[i] = c
+    p1 = 0
     for n in nums:
-        primes = [2]  # Initialize with the first prime number
-
-        # Find all primes up to n using the Sieve of Eratosthenes
-        for num in range(3, n + 1, 2):
-            if is_prime(num, primes):
-                primes.append(num)
-
-        # Determine the winner based on remaining primes
-        maria_wins = sum(not is_prime(i, primes) for i in range(1, n + 1))
-        ben_wins = n - maria_wins
-
-        if maria_wins > ben_wins:
-            current_winner = "Maria"
-        elif ben_wins > maria_wins:
-            current_winner = "Ben"
-        else:
-            current_winner = None
-
-        # Update overall winner
-        if current_winner:
-            most_wins += 1
-            winner = current_winner
-
-    return winner
+        p1 += m[n] % 2 == 1
+    if p1 * 2 == len(nums):
+        return None
+    if p1 * 2 > len(nums):
+        return "Maria"
+    return "Ben"
