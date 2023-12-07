@@ -1,35 +1,43 @@
 #!/usr/bin/python3
-"""Prime Game"""
+""" Prime Game """
 
 
-def is_prime(num):
+def is_prime(num, primes):
     """Check if a given number is prime."""
-    if num < 2:
-        return False
-    for i in range(2, int(num**0.5) + 1):
-        if num % i == 0:
+    for prime in primes:
+        if prime * prime > num:
+            return True
+        if num % prime == 0:
             return False
     return True
 
 
 def isWinner(x, nums):
-    maria_wins = 0
-    ben_wins = 0
+    most_wins = 0
+    winner = None
 
     for n in nums:
-        prime_count = sum(is_prime(i) for i in range(1, n + 1))
-        if prime_count % 2 == 0:
-            ben_wins += 1
+        primes = [2]  # Initialize with the first prime number
+
+        # Find all primes up to n using the Sieve of Eratosthenes
+        for num in range(3, n + 1, 2):
+            if is_prime(num, primes):
+                primes.append(num)
+
+        # Determine the winner based on remaining primes
+        maria_wins = sum(not is_prime(i, primes) for i in range(1, n + 1))
+        ben_wins = n - maria_wins
+
+        if maria_wins > ben_wins:
+            current_winner = "Maria"
+        elif ben_wins > maria_wins:
+            current_winner = "Ben"
         else:
-            maria_wins += 1
+            current_winner = None
 
-    if maria_wins > ben_wins:
-        return "Maria"
-    elif ben_wins > maria_wins:
-        return "Ben"
-    else:
-        return None
+        # Update overall winner
+        if current_winner:
+            most_wins += 1
+            winner = current_winner
 
-
-if __name__ == "__main__":
-    print("Winner:", isWinner(3, [4, 5, 1]))
+    return winner
